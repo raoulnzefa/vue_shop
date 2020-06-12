@@ -340,6 +340,7 @@ export default {
       }
       this.$message.success(res.meta.msg);
       this.getUserList();
+      console.log("okkkk");
     }
   }
 };
