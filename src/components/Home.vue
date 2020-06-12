@@ -20,6 +20,7 @@
           :collapse="isCollapse"
           :collapse-transition="false"
           unique-opened
+          :default-active="activePath"
           background-color="#333744"
           text-color="#fff"
           active-text-color="#409eff"
@@ -39,6 +40,7 @@
               :index="'/' + subItem.path"
               v-for="subItem in item.children"
               :key="subItem.id"
+              @click="saveNavState('/' + subItem.path)"
             >
               <!-- 二级菜单的模板区 -->
               <template slot="title">
@@ -75,11 +77,14 @@ export default {
         "102": "iconfont icon-danju",
         "145": "iconfont icon-baobiao"
       },
-      isCollapse: false
+      isCollapse: false,
+      // 被激活的链接地址
+      activePath: ""
     };
   },
   created() {
     this.getMenuList();
+    this.activePath = window.sessionStorage.getItem("activePath");
   },
   methods: {
     logout() {
@@ -97,6 +102,11 @@ export default {
     // 点击折叠展开侧边栏
     toggleCollapse() {
       this.isCollapse = !this.isCollapse;
+    },
+    // 保存链接的激活状态
+    saveNavState(activePath) {
+      window.sessionStorage.setItem("activePath", activePath);
+      this.activePath = activePath;
     }
   }
 };
